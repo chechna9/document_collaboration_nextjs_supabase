@@ -2,7 +2,7 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import "../globals.css";
 import { Suspense } from "react";
-import { Providers } from "./Providers";
+import { Providers } from "./editor/Providers";
 
 export const metadata = {
   title: "Liveblocks",
@@ -15,21 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link
-          href="https://liveblocks.io/favicon-32x32.png"
-          rel="icon"
-          sizes="32x32"
-          type="image/png"
-        />
-        <link
-          href="https://liveblocks.io/favicon-16x16.png"
-          rel="icon"
-          sizes="16x16"
-          type="image/png"
-        />
-      </head>
       <body>
+        <div>Root layout</div>
+
         <Providers>
           <Suspense>{children}</Suspense>
         </Providers>
