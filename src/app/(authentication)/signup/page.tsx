@@ -1,4 +1,4 @@
-import { SignupForm } from "@/components/auth_forms/signup_form";
+import { SignupForm } from "@/app/(authentication)/signup/components/signup_form";
 import { Form } from "@/components/ui/form";
 import React from "react";
 
