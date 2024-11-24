@@ -9,7 +9,7 @@ import { useRoom, useSelf } from "@liveblocks/react/suspense";
 import { useEffect, useState } from "react";
 import { Toolbar } from "./Toolbar";
 import styles from "./CollaborativeEditor.module.css";
-import { Avatars } from "@/components/Avatars";
+import { Avatars } from "@/components/liveblocks_init/Avatars";
 
 // Collaborative text editor with simple rich text, live cursors, and live avatars
 export function CollaborativeEditor() {
