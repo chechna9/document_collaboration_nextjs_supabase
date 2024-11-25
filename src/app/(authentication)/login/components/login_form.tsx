@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "../../actions";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -45,7 +46,7 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="formSize">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
           control={form.control}
           name="email"
@@ -72,7 +73,9 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-
+ <div>
+          <Link href={"/signup"}>Don't have an account?</Link>
+        </div>
         {/* {searchParams.message && (
               <div className="text-sm font-medium text-destructive">
                 {searchParams.message}

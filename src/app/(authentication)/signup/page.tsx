@@ -4,9 +4,8 @@ import React from "react";
 
 const SignupPage = () => {
   return (
-    <div>
-      <h1>SignupPage</h1>
-      <SignupForm/>
+    <div className="bg-white h-fit p-5 rounded-md formSize">
+      <SignupForm />   
     </div>
   );
 };

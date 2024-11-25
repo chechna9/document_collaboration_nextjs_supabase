@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { signup } from "../../actions";
 import { uploadFile } from "@/lib/supabase/supabaseStorage";
+import Link from "next/link";
 export const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -69,7 +70,7 @@ export function SignupForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="formSize">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
           control={form.control}
           name="username"
@@ -119,11 +120,15 @@ export function SignupForm() {
             />
           </FormControl>
           <FormMessage />
-        </FormItem>
+        </FormItem>{" "}
+        <div>
+          <Link href={"/login"}>Already have an account?</Link>
+        </div>
+        
         <Button disabled={form.formState.isSubmitting} type="submit">
           {form.formState.isSubmitting && <Loader2 className="animate-spin" />}
           Signup
-        </Button>
+        </Button>{" "}
       </form>
     </Form>
   );

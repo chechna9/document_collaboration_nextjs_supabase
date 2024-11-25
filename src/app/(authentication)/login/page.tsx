@@ -3,8 +3,8 @@ import { LoginForm } from "./components/login_form";
 
 const LoginPage = () => {
   return (
-    <div>
-      <h1>LoginPage</h1>
+
+    <div className="bg-white h-fit p-5 rounded-md formSize">
       <LoginForm/>
     </div>
   );
