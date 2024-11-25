@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,8 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signup } from "../../actions";
-
-const formSchema = z.object({
+import { uploadFile } from "@/lib/supabase/supabaseStorage";
+export const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
@@ -27,9 +26,12 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
-
-  // Optional fields
-  profilePicture: z.instanceof(FileList).optional(),
+  profilePicture: z
+    .any()
+    .refine((file) => !file || file instanceof FileList, {
+      message: "Invalid file upload.",
+    })
+    .optional(),
 });
 
 export function SignupForm() {
@@ -42,15 +44,26 @@ export function SignupForm() {
       profilePicture: undefined,
     },
   });
-  // to handle files
-  const pictFileRef = form.register("profilePicture");
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-   await signup({ email: values.email, password: values.password });
-    console.log(values);
+    const file = values.profilePicture?.[0] ?? null;
+    try {
+      let profilePictureUrl = null;
+
+      // Handle file upload
+      if (values.profilePicture?.[0]) {
+        profilePictureUrl = await uploadFile(values.profilePicture[0]);
+      }
+      await signup({
+        email: values.email,
+        password: values.password,
+        username: values.username,
+        profilePictUrl: profilePictureUrl,
+      });
+      console.log("Signup successful:", values);
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
   }
 
   return (
@@ -95,27 +108,19 @@ export function SignupForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="profilePicture"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Profile Picture</FormLabel>
-              <FormControl>
-                <Input
-                  type="file"
-                  placeholder="shadcn"
-                  {...pictFileRef}
-                  accept="image/*"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
+        <FormItem>
+          <FormLabel>Profile Picture</FormLabel>
+          <FormControl>
+            <Input
+              type="file"
+              accept="image/*"
+              {...form.register("profilePicture")}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
         <Button disabled={form.formState.isSubmitting} type="submit">
-          {form.formState.isSubmitting && <Loader2 className="animate-spin" />}{" "}
+          {form.formState.isSubmitting && <Loader2 className="animate-spin" />}
           Signup
         </Button>
       </form>
