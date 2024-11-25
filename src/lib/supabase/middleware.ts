@@ -35,6 +35,9 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser()
+
+  console.log('user', user)
+
   if (!user && request.nextUrl.pathname.match('/')){
     return supabaseResponse;
   }
@@ -48,12 +51,11 @@ export async function updateSession(request: NextRequest) {
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
-  if (user) {
+  if (user && !request.nextUrl.pathname.startsWith('/documents')) {
     // user is logged in, potentially respond by redirecting the user to the documents page
     const url = request.nextUrl.clone()
     url.pathname = '/documents'
-    NextResponse.redirect(url)
-    return supabaseResponse 
+  return  NextResponse.redirect(url)
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're

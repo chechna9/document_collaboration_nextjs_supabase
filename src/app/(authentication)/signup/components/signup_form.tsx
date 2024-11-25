@@ -58,7 +58,8 @@ export function SignupForm() {
         email: values.email,
         password: values.password,
         username: values.username,
-        profilePictUrl: profilePictureUrl,
+        // profilePictUrl: profilePictureUrl,
+        profilePictUrl: null,
       });
       console.log("Signup successful:", values);
     } catch (error) {

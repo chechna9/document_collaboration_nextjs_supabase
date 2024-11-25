@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signUpWithProfile } from "@/actions/profileActions";
+import { useAuthStore } from "@/stores/authStore";
 
 export async function login({
   email,
@@ -13,15 +14,19 @@ export async function login({
   password: string;
 }) {
   const supabase = await createClient();
-
+  const setUser = useAuthStore.getState().setUser;
   // type-casting here for convenience
   // in practice, you should validate your inputs
-  const data = {
+  const form = {
     email: email,
     password: password,
   };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { data,error } = await supabase.auth.signInWithPassword(form);
+// Update Zustand store
+  const user = data.user;
+  setUser(user && user.email ? { id: user.id, email: user.email } : null);
+
 
   if (error) {
     redirect("/login?message=Error siging in");
