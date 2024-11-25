@@ -3,7 +3,7 @@ import Navbar from './components/navbar'
 
 const DocumetnsLayout = ({children}:PropsWithChildren) => {
   return (
-    <div>
+    <div className='p-4'>
         <Navbar/>
         {children}
     </div>

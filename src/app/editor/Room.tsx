@@ -5,6 +5,7 @@ import { RoomProvider } from "@liveblocks/react/suspense";
 import { useSearchParams } from "next/navigation";
 import { ClientSideSuspense } from "@liveblocks/react";
 import { Loading } from "@/components/liveblocks_init/Loading";
+import Navbar from "../documents/components/navbar";
 
 export function Room({ children }: { children: ReactNode }) {
   const roomId = useExampleRoomId("liveblocks:examples:nextjs-yjs-blocknote");
@@ -16,7 +17,12 @@ export function Room({ children }: { children: ReactNode }) {
         cursor: null,
       }}
     >
-      <ClientSideSuspense fallback={<Loading />}>{children}</ClientSideSuspense>
+      <div className="h-full w-full space-y-3">
+        <Navbar/>
+        <ClientSideSuspense fallback={<Loading />}>
+          {children}
+        </ClientSideSuspense>
+      </div>
     </RoomProvider>
   );
 }

@@ -19,7 +19,7 @@ export function CollaborativeEditor() {
 
   // Set up Liveblocks Yjs provider
   useEffect(() => {
-    const yDoc = new Y.Doc();
+    let yDoc = new Y.Doc();
     const yProvider = new LiveblocksYjsProvider(room, yDoc);
     setDoc(yDoc);
     setProvider(yProvider);
