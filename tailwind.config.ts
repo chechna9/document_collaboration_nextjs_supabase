@@ -8,6 +8,8 @@ export default {
   theme: {
   	extend: {
   		colors: {
+			myColor1: "#1A1A1D",
+			myColor2: "#3B1C32",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

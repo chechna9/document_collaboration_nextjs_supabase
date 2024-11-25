@@ -18,7 +18,6 @@ import { Input } from "@/components/ui/input";
 import { login } from "../../actions";
 
 const formSchema = z.object({
- 
   email: z.string().email({
     message: "Invalid email address.",
   }),
@@ -47,7 +46,6 @@ export function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="formSize">
-      
         <FormField
           control={form.control}
           name="email"
@@ -73,9 +71,9 @@ export function LoginForm() {
               <FormMessage />
             </FormItem>
           )}
-        />    
+        />
 
-            {/* {searchParams.message && (
+        {/* {searchParams.message && (
               <div className="text-sm font-medium text-destructive">
                 {searchParams.message}
               </div>
